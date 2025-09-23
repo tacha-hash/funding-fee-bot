@@ -15,22 +15,51 @@
 - บัญชี AsterDex ที่มี API Key/Secret และเงินทุนเพียงพอ
 
 ## การตั้งค่า
-ค่าพื้นฐานสามารถแก้ไขได้โดยตรงในหัวไฟล์ `funding_bot.py`
+
+### วิธีที่ 1: ใช้ Setup Script (แนะนำ)
+รันสคริปต์ตั้งค่า environment อัตโนมัติ:
+```bash
+python3 setup_env.py
 ```
-DEFAULT_CAPITAL_USD = Decimal("200000")
-DEFAULT_SPOT_SYMBOL = "ASTERUSDT"
-DEFAULT_FUTURES_SYMBOL = "ASTERUSDT"
-DEFAULT_BATCH_QUOTE = Decimal("200")
-DEFAULT_BATCH_DELAY = 1.0
-DEFAULT_LOG_LEVEL = "INFO"
-DEFAULT_MODE = "buy_spot_short_futures"
+
+### วิธีที่ 2: ตั้งค่าเอง
+1. คัดลอกไฟล์ตัวอย่าง:
+```bash
+cp .env.example .env
 ```
-นอกจากนี้สามารถแทนค่า API key/secret ที่ฝังอยู่ หรือเปลี่ยนให้โหลดจาก environment ภายนอกตามต้องการ
+
+2. แก้ไขไฟล์ `.env` และใส่ API credentials ของคุณ:
+```
+ASTERDEX_API_KEY=your_actual_api_key_here
+ASTERDEX_API_SECRET=your_actual_api_secret_here
+```
+
+### วิธีที่ 3: ใช้ Environment Variables
+ตั้งค่าผ่าน shell:
+```bash
+export ASTERDEX_API_KEY="your_api_key"
+export ASTERDEX_API_SECRET="your_api_secret"
+```
+
+### การปรับแต่งค่าเริ่มต้น
+ค่าพื้นฐานสามารถแก้ไขได้ในไฟล์ `.env` หรือผ่าน command line arguments:
+```
+DEFAULT_CAPITAL_USD=200000
+DEFAULT_SPOT_SYMBOL=ASTERUSDT
+DEFAULT_FUTURES_SYMBOL=ASTERUSDT
+DEFAULT_BATCH_QUOTE=200
+DEFAULT_BATCH_DELAY=1.0
+DEFAULT_MODE=buy_spot_short_futures
+```
 
 ## การใช้งาน
 ติดตั้งไลบรารีที่จำเป็นก่อน:
+```bash
+pip3 install -r requirements.txt
 ```
-pip install requests
+หรือติดตั้งแยก:
+```bash
+pip3 install requests python-dotenv
 ```
 รันสคริปต์ด้วยค่าเริ่มต้น:
 ```

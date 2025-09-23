@@ -12,22 +12,30 @@ from urllib.parse import urlencode
 
 import requests
 
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not installed, use system environment variables only
+
 
 getcontext().prec = 28
 
 DEFAULT_API_KEY = ""  # ตัวอย่างค่า API key หากไม่ดึงจาก environment
 DEFAULT_API_SECRET = ""  # ตัวอย่างค่า API secret หากไม่ดึงจาก environment
 
-DEFAULT_CAPITAL_USD = Decimal("200000")  # ทุนรวมฝั่งสปอตที่ต้องการ deploy ทั้งหมด (หน่วย USDT)
-DEFAULT_SPOT_SYMBOL = "ASTERUSDT"  # คู่เทรดสปอตเริ่มต้นสำหรับฝั่งซื้อ/ขาย
-DEFAULT_FUTURES_SYMBOL = "ASTERUSDT"  # สัญญาฟิวเจอร์สเริ่มต้นสำหรับฝั่ง hedge
-DEFAULT_BATCH_QUOTE = Decimal("200")  # ขนาดคำสั่งต่อรอบในหน่วย quote (USDT) หรือประมาณการที่ใช้คำนวณปริมาณขาย
-DEFAULT_BATCH_DELAY = 1.0  # เวลาหน่วงระหว่างรอบส่งคำสั่งแต่ละชุด (วินาที)
-DEFAULT_LOG_LEVEL = "INFO"  # ระดับความละเอียดของ log ขณะรัน
+# Load values from environment or use hardcoded defaults
+DEFAULT_CAPITAL_USD = Decimal(os.environ.get("DEFAULT_CAPITAL_USD", "1200"))  # ทุนรวมฝั่งสปอตที่ต้องการ deploy ทั้งหมด (หน่วย USDT)
+DEFAULT_SPOT_SYMBOL = os.environ.get("DEFAULT_SPOT_SYMBOL", "ASTERUSDT")  # คู่เทรดสปอตเริ่มต้นสำหรับฝั่งซื้อ/ขาย
+DEFAULT_FUTURES_SYMBOL = os.environ.get("DEFAULT_FUTURES_SYMBOL", "ASTERUSDT")  # สัญญาฟิวเจอร์สเริ่มต้นสำหรับฝั่ง hedge
+DEFAULT_BATCH_QUOTE = Decimal(os.environ.get("DEFAULT_BATCH_QUOTE", "100"))  # ขนาดคำสั่งต่อรอบในหน่วย quote (USDT) หรือประมาณการที่ใช้คำนวณปริมาณขาย
+DEFAULT_BATCH_DELAY = float(os.environ.get("DEFAULT_BATCH_DELAY", "1.0"))  # เวลาหน่วงระหว่างรอบส่งคำสั่งแต่ละชุด (วินาที)
+DEFAULT_LOG_LEVEL = os.environ.get("DEFAULT_LOG_LEVEL", "INFO")  # ระดับความละเอียดของ log ขณะรัน
 
 MODE_BUY_SPOT_SHORT_FUTURES = "buy_spot_short_futures"  # โหมดซื้อสปอตและเปิดชอร์ตฟิวเจอร์สเพื่อ hedge
 MODE_SELL_SPOT_LONG_FUTURES = "sell_spot_long_futures"  # โหมดขายสปอตและเปิดลองฟิวเจอร์สเพื่อ hedge
-DEFAULT_MODE = MODE_BUY_SPOT_SHORT_FUTURES  # โหมดดีฟอลต์เมื่อไม่กำหนดผ่าน CLI
+DEFAULT_MODE = os.environ.get("DEFAULT_MODE", MODE_BUY_SPOT_SHORT_FUTURES)  # โหมดดีฟอลต์เมื่อไม่กำหนดผ่าน CLI
 
 
 class ColorFormatter(logging.Formatter):
