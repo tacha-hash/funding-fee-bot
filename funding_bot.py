@@ -15,10 +15,10 @@ import requests
 
 getcontext().prec = 28
 
-DEFAULT_API_KEY = ""  # ตัวอย่างค่า API key หากไม่ดึงจาก environment
-DEFAULT_API_SECRET = ""  # ตัวอย่างค่า API secret หากไม่ดึงจาก environment
+DEFAULT_API_KEY = "d950ba6840ce416cf51a7ca8c599965c1d03a7f12a3ea88b3482081971ab3d25"  # ตัวอย่างค่า API key หากไม่ดึงจาก environment
+DEFAULT_API_SECRET = "723db4d12115a078815519f9717fd449904628125036731cc96917c07f9f924b"  # ตัวอย่างค่า API secret หากไม่ดึงจาก environment
 
-DEFAULT_CAPITAL_USD = Decimal("200000")  # ทุนรวมฝั่งสปอตที่ต้องการ deploy ทั้งหมด (หน่วย USDT)
+DEFAULT_CAPITAL_USD = Decimal("26000")  # ทุนรวมฝั่งสปอตที่ต้องการ deploy ทั้งหมด (หน่วย USDT)
 DEFAULT_SPOT_SYMBOL = "ASTERUSDT"  # คู่เทรดสปอตเริ่มต้นสำหรับฝั่งซื้อ/ขาย
 DEFAULT_FUTURES_SYMBOL = "ASTERUSDT"  # สัญญาฟิวเจอร์สเริ่มต้นสำหรับฝั่ง hedge
 DEFAULT_BATCH_QUOTE = Decimal("200")  # ขนาดคำสั่งต่อรอบในหน่วย quote (USDT) หรือประมาณการที่ใช้คำนวณปริมาณขาย
