@@ -17,13 +17,19 @@ try:
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
-    pass  # dotenv not installed, use system environment variables only
+    # If dotenv is not available, try to load .env manually
+    if os.path.exists('.env'):
+        with open('.env', 'r') as f:
+            for line in f:
+                if line.strip() and not line.startswith('#'):
+                    key, value = line.strip().split('=', 1)
+                    os.environ[key] = value
 
 
 getcontext().prec = 28
 
-DEFAULT_API_KEY = "d950ba6840ce416cf51a7ca8c599965c1d03a7f12a3ea88b3482081971ab3d25"  # ตัวอย่างค่า API key หากไม่ดึงจาก environment
-DEFAULT_API_SECRET = "723db4d12115a078815519f9717fd449904628125036731cc96917c07f9f924b"  # ตัวอย่างค่า API secret หากไม่ดึงจาก environment
+DEFAULT_API_KEY = ""  # ตัวอย่างค่า API key หากไม่ดึงจาก environment
+DEFAULT_API_SECRET = ""  # ตัวอย่างค่า API secret หากไม่ดึงจาก environment
 
 DEFAULT_CAPITAL_USD = Decimal("200000")  # ทุนรวมฝั่งสปอตที่ต้องการ deploy ทั้งหมด (หน่วย USDT)
 DEFAULT_SPOT_SYMBOL = "ASTERUSDT"  # คู่เทรดสปอตเริ่มต้นสำหรับฝั่งซื้อ/ขาย
